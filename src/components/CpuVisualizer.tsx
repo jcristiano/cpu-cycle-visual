@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   Box, Grid, Paper, Typography, Button, TextField, Stack,
+  Slider,
 } from '@mui/material'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import PauseIcon from '@mui/icons-material/Pause'
@@ -202,6 +203,7 @@ export default function CpuVisualizer() {
                 justifyContent: 'space-between'
               }}
             >
+              
               <Box
                 sx={{
                   width: 320,
@@ -288,6 +290,21 @@ export default function CpuVisualizer() {
                   mb: 3
                 }}
               >
+                <Stack direction="column" spacing={1} alignItems="center" mb={2}>
+  <Typography variant="subtitle1">
+    Tempo de clock: {speed} ms
+  </Typography>
+  <Slider
+    value={speed}
+    onChange={(e, val) => setSpeed(val as number)}
+    aria-labelledby="clock-speed-slider"
+    valueLabelDisplay="auto"
+    step={50}
+    min={100}
+    max={2000}
+    sx={{ width: 300 }}
+  />
+</Stack>
                 {phaseOrder.map((p, idx) => {
                   const active = phase === p
                   return (
@@ -374,6 +391,9 @@ export default function CpuVisualizer() {
                   Reiniciar
                 </Button>
               </Stack>
+
+                  
+
               <Draggable handle=".drag-handle">
                 <Paper
                   sx={{
