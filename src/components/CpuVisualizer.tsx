@@ -9,8 +9,9 @@ import SkipNextIcon from '@mui/icons-material/SkipNext'
 import MemoryIcon from '@mui/icons-material/Storage'
 import CodeIcon from '@mui/icons-material/Code'
 import BoltIcon from '@mui/icons-material/Bolt'
-import { motion } from 'framer-motion'
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet'
+import Draggable from 'react-draggable'
+import VideoLink from './VideoLink'
 
 type Phase = 'idle' | 'fetch' | 'decode' | 'execute'
 
@@ -373,22 +374,48 @@ export default function CpuVisualizer() {
                   Reiniciar
                 </Button>
               </Stack>
+              <Draggable handle=".drag-handle">
+                <Paper
+                  sx={{
+                    p: 2,
+                    borderRadius: 2,
+                    backgroundColor: '#f9f9f9',
+                    userSelect: 'none',
+                    width: 320,
+                    position: 'absolute',
+                    top: 20,
+                    right: 20,
+                    zIndex: 9999,
+                    boxShadow: 3,
+                  }}
+                >
+                  {/* Barra de título para arrastar */}
+                  <Box
+                    className="drag-handle"
+                    sx={{
+                      cursor: 'move',
+                      backgroundColor: '#1976d2',
+                      color: '#fff',
+                      px: 2,
+                      py: 1,
+                      borderRadius: '6px 6px 0 0',
+                      fontWeight: 'bold',
+                      userSelect: 'none',
+                      mb: 1,
+                      fontSize: '1.1rem',
+                    }}
+                  >
+                    Console da CPU
+                  </Box>
 
-              <Paper
-                sx={{
-                  p: 2,
-                  borderRadius: 2,
-                  backgroundColor: '#f9f9f9',
-                  userSelect: 'none'
-                }}
-              >
-                <Typography variant="h6" gutterBottom>
-                  Console da CPU
-                </Typography>
-                <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace' }}>
-                  {`PC: ${pc}\nIR: ${ir || '(—)'}\nACC: ${acc}\nFase: ${phase.toUpperCase()}`}
-                </Typography>
-              </Paper>
+                  <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace' }}>
+                    {`PC: ${pc}\nIR: ${ir || '(—)'}\nACC: ${acc}\nFase: ${phase.toUpperCase()}`}
+                  </Typography>
+                  <Box sx={{ mt: 2, mb: 3 }}>
+                    <VideoLink />
+                  </Box>
+                </Paper>
+              </Draggable>
             </Box>
           </Grid>
         </Grid>
